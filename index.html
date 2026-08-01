@@ -408,6 +408,9 @@
     .stat-chip .sc-label { font-size: 0.7rem; color: var(--muted); font-weight: 500; }
     .chip-a { top: 8px;  left: -60px; animation: float-a 4s ease-in-out infinite; }
     .chip-b { bottom: 16px; right: -50px; animation: float-b 4.6s ease-in-out infinite; }
+    /* Wrapper so the two floating stat chips can become a tidy static row on
+       mobile without touching their desktop absolute-positioned layout */
+    .stat-chip-row { display: contents; }
     @keyframes float-a { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
     @keyframes float-b { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
@@ -427,15 +430,26 @@
     .csc-body { padding: 14px 18px; font-family: var(--mono); font-size: 0.76rem; line-height: 1.85; color: var(--soft); }
 
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-visual { align-items: center; }
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+      .hero-visual { align-items: center; order: -1; }
       .chip-a { left: -30px; }
       .chip-b { right: -30px; }
+      /* Center the intro copy under the photo for a tidier mobile layout */
+      #hero .hero-inner > div:first-child { text-align: center; }
+      .hero-eyebrow, .hero-actions, .hero-socials { justify-content: center; }
+      .terminal-box, .code-snippet-card { text-align: left; }
     }
     @media (max-width: 540px) {
-      .avatar-img { width: 150px; height: 150px; }
-      .chip-a { display: none; }
-      .chip-b { display: none; }
+      /* Bigger, clearer photo on phones instead of shrinking it */
+      .avatar-img { width: 190px; height: 190px; }
+      .stat-chip-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+      .stat-chip-row .stat-chip { position: static; animation: none; }
+    }
+    @media (max-width: 640px) {
+      #about, #skills, #projects, #experience { padding: 64px 0; }
+      #contact { padding: 64px 0 80px; }
+      #hero { padding: 56px 0 40px; }
+      .section-head { margin-bottom: 32px; }
     }
 
     /* ── ABOUT ───────────────────────────────────────────────────────── */
@@ -841,13 +855,15 @@
               <img src="my-photo.jpg" alt="Mohammed Almomani developer avatar">
             </div>
           </div>
-          <div class="stat-chip chip-a">
-            <div class="sc-num" data-count="3">0</div>
-            <div class="sc-label">Years Building</div>
-          </div>
-          <div class="stat-chip chip-b">
-            <div class="sc-num" data-count="40">0</div>
-            <div class="sc-label">Projects Shipped</div>
+          <div class="stat-chip-row">
+            <div class="stat-chip chip-a">
+              <div class="sc-num" data-count="3">0</div>
+              <div class="sc-label">Years Building</div>
+            </div>
+            <div class="stat-chip chip-b">
+              <div class="sc-num" data-count="40">0</div>
+              <div class="sc-label">Projects Shipped</div>
+            </div>
           </div>
         </div>
 
